@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import Dashboard from './Dashboard';
+import Login from './pages/Login';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
