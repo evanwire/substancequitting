@@ -2,3 +2,8 @@
     border-radius: 50%;
 
 }
+
+.ProgCard{
+    max-width: 10rem;
+    max-height: 10rem;
+}
