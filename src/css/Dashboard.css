@@ -1,0 +1,14 @@
+.OuterWrapper{
+    margin: 0;
+    padding: 0;
+    overflow-x: scroll;
+    display: block;
+  }
+  
+  .MainNav{
+    width: 100vw;
+    height: 7vh;
+    margin: 0;
+    padding-left: 15px;
+  
+  }
