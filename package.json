@@ -13,6 +13,8 @@
     "chance": "^1.1.7",
     "emoji-js": "^3.5.0",
     "firebase": "^8.0.1",
+    "firebase-admin": "^9.3.0",
+    "firebase-auto-ids": "^1.1.0",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.0",
     "react-confetti": "^6.0.0",

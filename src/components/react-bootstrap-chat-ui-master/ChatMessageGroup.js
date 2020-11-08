@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 import SingleChat from './SingleChat'
 
 
-const ChatMessagesGroup = ({messages = [], agentUser, timeFormatter}) =>{
+const ChatMessagesGroup = ({messages = [], displayName}) =>{
     if(Array.isArray(messages)){
         return(
             <div className='chat-message-list'>
                 {
                     messages.map(
-                        (d,i) =><SingleChat message={d} left={d.user !== agentUser} timeFormatter={timeFormatter} /> 
+                        (d,i) =><SingleChat key={i} message={d} left={d.sender !== displayName}/> 
                     )
                 }
             </div>
@@ -20,8 +20,7 @@ const ChatMessagesGroup = ({messages = [], agentUser, timeFormatter}) =>{
 
 ChatMessagesGroup.propTypes ={
     messages: PropTypes.array,
-    agentUser: PropTypes.any,
-    timeFormatter: PropTypes.func
+    displayName: PropTypes.string,
 }
 
 export default ChatMessagesGroup

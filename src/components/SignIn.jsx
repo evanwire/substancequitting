@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import 'bootswatch/dist/lux/bootstrap.min.css';
 import '../css/Dashboard.css'
 import { Link } from "@reach/router";
-import { signInWithGoogle } from "../firebase";
 import { auth } from "../firebase";
 
 //Bootstrap components
@@ -58,9 +57,6 @@ const SignIn = () => {
                 placeholder="E.g: faruq123@gmail.com"
                 id="userEmail"
                 onChange = {(event) => onChangeHandler(event)}/>
-              <Form.Text className="text-muted">
-                We'll never share your email with anyone else.
-              </Form.Text>
             </Form.Group>
 
             <Form.Group controlId="formBasicPassword">
@@ -72,20 +68,8 @@ const SignIn = () => {
                 id="userPassword"
                 onChange = {(event) => onChangeHandler(event)} />
             </Form.Group>
-            <Form.Group controlId="formBasicCheckbox">
-              <Form.Check type="checkbox" label="Check me out" />
-            </Form.Group>
             <Button variant="primary" onClick = {(event) => {signInWithEmailAndPasswordHandler(event, email, password)}}>
               Sign In
-            </Button>
-            <p className="text-center my-3">or</p>
-            <Button
-              className="bg-red-500 hover:bg-red-600 w-full py-2 text-white"
-              onClick={() => {
-                signInWithGoogle();
-              }}
-            >
-              Sign in with Google
             </Button>
             <p className="text-center my-3">
               Don't have an account?{" "}

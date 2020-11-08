@@ -18,33 +18,31 @@ class ChatComponent extends Component {
     componentDidUpdate(prevProps){
         const prevMsgs = prevProps.messages
         const msgs = this.props.messages
-        if (Array.isArray(prevMsgs) && Array.isArray(msgs) && msgs.length !== prevMsgs.length){
-            this.scrollToBottom()
-        }
+        this.scrollToBottom()
+        
     }
     render() {
-        const { messages, agentUser, iconSend, displayStop, onMessageStop, timeFormatter } = this.props
+        const { messages, agentUser, iconSend } = this.props
         return (
-            <div className='container chat-component'>
-                <div className='chat-messages-container row'>
-                    <div className='col-12'>
+            <div className='container chat-component mt-2'>
+                <div className='chat-messages-container row' >
+                    <div className='col-12' style={{maxHeight: "50vh", overflowX: "scroll"}}>
                         <ChatMessagesGroup
                             messages={messages}
-                            agentUser={agentUser}
-                            timeFormatter={timeFormatter}
+                            displayName={this.props.displayName}
+                            
                         />
-                    </div>
-                </div>
-                <div className='row chat-component-bottom'>
-                    <div style={{ float: "left", clear: "both" }}>
+                        <div style={{ float: "left", clear: "both" }}>
                         <div ref={this.componentRef} />
                     </div>
+                    </div>
+                </div>
+                <div className='row chat-component-bottom '>
+                    
                     <div className='col-12 fixed-bottom'>
                         <ChatInput
-                            iconSend={iconSend}
-                            onMessageSend={text => this.onMessageSend(text)}
-                            displayStop={displayStop}
-                            onMessageStop={onMessageStop}
+                            iconSend={iconSend} 
+                            sendMsg={this.onMessageSend}
                         />
                     </div>
                 </div>
@@ -54,7 +52,7 @@ class ChatComponent extends Component {
 }
 ChatComponent.propTypes = {
     messages: PropTypes.array,
-    agentUser: PropTypes.any,
+    displayName: PropTypes.string,
     timeFormatter: PropTypes.func,
     iconSend: PropTypes.node,
     onMessageSend: PropTypes.func,
@@ -65,7 +63,5 @@ ChatComponent.propTypes = {
 ChatComponent.defaultProps = {
     onMessageSend: (text) => null,
     onMessageStop: () => null,
-    displayStop: true,
-    timeFormatter: (time) => time
 }
 export default ChatComponent

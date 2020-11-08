@@ -4,17 +4,20 @@ import { Router } from "@reach/router";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import UserProvider from "../providers/UserProvider";
-import ProfilePage from "./ProfilePage";
+import Dashboard from "./Dashboard";
 import { UserContext } from "../providers/UserProvider";
 import PasswordReset from "./PasswordReset";
+import generateAutoId from "firebase-auto-ids"
+
 function Application() {
   const user = useContext(UserContext);
+  let newId = generateAutoId(new Date().getTime())
   return (
         user ?
-        <ProfilePage />
+        <Dashboard user={user} newId={newId}/>
       :
         <Router>
-          <SignUp path="signUp" />
+          <SignUp path="signUp" newId={newId}/>
           <SignIn path="/" />
           <PasswordReset path = "passwordReset" />
         </Router>

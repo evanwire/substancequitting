@@ -1,28 +1,71 @@
 import React, { useContext, useState } from "react";
 import 'bootswatch/dist/lux/bootstrap.min.css';
 import { Link } from "@reach/router";
-import { auth, signInWithGoogle, generateUserDocument } from "../firebase";
+import { auth, firestore, generateUserDocument } from "../firebase";
+
+
+//Bootstrap components
+
+import Button from 'react-bootstrap/Button'
+import Nav from 'react-bootstrap/Nav'
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
+  const [dpw, setDPW] = useState(0);
+  const [reasonQuit, setReasonQuit] = useState("");
+  const [dateQuit, setDateQuit] = useState("");
   const [error, setError] = useState(null);
 
   const createUserWithEmailAndPasswordHandler = async (event, email, password) => {
     event.preventDefault();
     try{
       const {user} = await auth.createUserWithEmailAndPassword(email, password);
-      generateUserDocument(user, {displayName});
+      const helper = firestore.collection("helper").doc("helper")
+      const doc = await helper.get();
+
+      const randRoom = Math.floor(Math.random() * doc.data().numRooms)
+      console.log(dateQuit)
+      let dateObj = Date.parse(dateQuit)
+      console.log(dateObj.toString())
+      const secondsSinceEpoch = Math.round(dateObj / 1000)
+
+
+      
+      await firestore.collection('users').doc(user.uid).set({
+                                                        chatId: "",
+                                                        dateQuit: {seconds: secondsSinceEpoch, nanoseconds: 0},
+                                                        displayName: displayName,
+                                                        dpw: parseInt(dpw),
+                                                        email: email,
+                                                        groupId: randRoom,
+                                                        reasonQuit: reasonQuit
+                                                        });
+      
     }
     catch(error){
       setError('Error Signing up with email and password');
     }
+    
+      
+      
+  
       
     setEmail("");
     setPassword("");
     setDisplayName("");
+    setDPW(0);
+    setReasonQuit("");
+    setDateQuit("");
+
+
   };
+
+  
 
   const onChangeHandler = event => {
     const { name, value } = event.currentTarget;
@@ -33,84 +76,98 @@ const SignUp = () => {
       setPassword(value);
     } else if (name === "displayName") {
       setDisplayName(value);
+    } else if (name === "dpw"){
+      setDPW(value)
+    } else if (name === "reasonQuit"){
+      setReasonQuit(value)
+    } else if (name === "dateQuit"){
+      setDateQuit(value)
     }
   };
 
   return (
-    <div className="mt-8">
-      <h1 className="text-3xl mb-2 text-center font-bold">Sign Up</h1>
-      <div className="border border-blue-400 mx-auto w-11/12 md:w-2/4 rounded py-8 px-4 md:px-8">
-        {error !== null && (
-          <div className="py-4 bg-red-600 w-full text-white text-center mb-3">
-            {error}
-          </div>
-        )}
-        <form className="">
-          <label htmlFor="displayName" className="block">
-            Display Name:
-          </label>
-          <input
-            type="text"
-            className="my-1 p-1 w-full "
-            name="displayName"
-            value={displayName}
-            placeholder="E.g: Faruq"
-            id="displayName"
-            onChange={event => onChangeHandler(event)}
-          />
-          <label htmlFor="userEmail" className="block">
-            Email:
-          </label>
-          <input
-            type="email"
-            className="my-1 p-1 w-full"
-            name="userEmail"
-            value={email}
-            placeholder="E.g: faruq123@gmail.com"
-            id="userEmail"
-            onChange={event => onChangeHandler(event)}
-          />
-          <label htmlFor="userPassword" className="block">
-            Password:
-          </label>
-          <input
-            type="password"
-            className="mt-1 mb-3 p-1 w-full"
-            name="userPassword"
-            value={password}
-            placeholder="Your Password"
-            id="userPassword"
-            onChange={event => onChangeHandler(event)}
-          />
-          <button
-            className="bg-green-400 hover:bg-green-500 w-full py-2 text-white"
-            onClick={event => {
-              createUserWithEmailAndPasswordHandler(event, email, password);
-            }}
-          >
-            Sign up
-          </button>
-        </form>
-        <p className="text-center my-3">or</p>
-        <button
-          onClick={() => {
-            try {
-              signInWithGoogle();
-            } catch (error) {
-              console.error("Error signing in with Google", error);
-            }
-          }}
-          className="bg-red-500 hover:bg-red-600 w-full py-2 text-white"
-        >
-          Sign In with Google
-        </button>
-        <p className="text-center my-3">
-          Already have an account?{" "}
-          <Link to="/" className="text-blue-500 hover:text-blue-600">
-            Sign in here
-          </Link>{" "}
-        </p>
-      </div>
+    <div className="OuterWrapper">
+      <Nav className="navbar-dark bg-primary MainNav sticky-top">
+          <h1 className="navbar-brand">Subtance Stopper</h1>
+      </Nav>
+      <Row className="justify-content-center mt-5">
+        <Col className="col-4">
+        <Form className="text-center">
+            <h1>Sign up</h1>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Please select a display name different than your real name</Form.Label>
+              <Form.Control type="text"
+                className="my-1 p-1 w-full "
+                name="displayName"
+                value={displayName}
+                placeholder="E.g: Faruq"
+                id="displayName"
+                onChange={event => onChangeHandler(event)}>
+              </Form.Control>
+            </Form.Group>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control type="email"
+                name="userEmail"
+                value = {email}
+                placeholder="E.g: faruq123@gmail.com"
+                id="userEmail"
+                onChange = {(event) => onChangeHandler(event)}/>
+            </Form.Group>
+
+            <Form.Group controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control type="password"
+                name="userPassword"
+                value = {password}
+                placeholder="Your Password"
+                id="userPassword"
+                onChange = {(event) => onChangeHandler(event)} />
+            </Form.Group>
+
+
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>About how many dollars per week do you spend on your addiction?</Form.Label>
+              <Form.Control type="number"
+                name="dpw"
+                value = {dpw}
+                id="dpw"
+                onChange = {(event) => onChangeHandler(event)}/>
+            </Form.Group>
+
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Why do you wish to quit?</Form.Label>
+              <Form.Control type="string"
+                name="reasonQuit"
+                value = {reasonQuit}
+                placeholder="E.g: To save money"
+                id="reasonQuit"
+                onChange = {(event) => onChangeHandler(event)}/>
+            </Form.Group>
+
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Give the date you quit/date you plan to quit</Form.Label>
+              <Form.Control type="date"
+                name="dateQuit"
+                value = {dateQuit}
+                placeholder=""
+                id="dateQuit"
+                onChange = {(event) => onChangeHandler(event)}/>
+            </Form.Group>
+
+            <Button variant="primary" onClick = {(event) => {createUserWithEmailAndPasswordHandler(event, email, password)}}>
+              Sign Up
+            </Button>
+            <p className="text-center my-3">
+              Already have an account?{" "}
+              <Link to="/" className="text-blue-500 hover:text-blue-600">
+                Sign in here
+              </Link>{" "}
+              
+            </p>
+          </Form>
+        </Col>
+      </Row>     
     </div>
   );
 };

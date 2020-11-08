@@ -1,0 +1,21 @@
+{
+    "groups": [
+        {
+        "id": "1234",
+        "thread": [{
+          "3a6Fo5rrUcBqhUJcLsP0": {
+            "content": "This site is cool!",
+            "created": "November 7, 2020 at 8:44:11 PM UTC-5",
+            "senderID": "YCrPJF3shzWSHagmr0Zl2WZFBgT2",
+            "senderName": "Anonymous123"
+          },
+          "4LXlVnWnoqyZEuKiiubh": {
+            "content": "Wow I love this site!",
+            "created": "November 12, 2020 at 8:40:05 PM UTC-5",
+            "senderID": "f84PFeGl2yaqUDaSiTVeqe9gHfD3",
+            "senderName": "HackRU2020"
+          }
+        }]
+      }
+    ]
+  }
