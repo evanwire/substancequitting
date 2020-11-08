@@ -75,9 +75,9 @@ class Dashboard extends Component {
         let daysClean = this.findDaysClean()
         let jumboContent;
         if(daysClean < 0){
-            jumboContent = <h1 className='text-center'>Get ready to quit in { daysClean * -1 } days!</h1>
+            jumboContent = <h1 className='text-center'>Get ready to quit in { (daysClean * -1) + 1 } days!</h1>
         } else{
-            jumboContent = <h1 className='text-center'>You have been { daysClean } days clean!</h1>
+            jumboContent = <h1 className='text-center'>You have been clean for { daysClean } days! Great job!</h1>
         }
         let content;
         if (key === "progress"){

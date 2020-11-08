@@ -4,14 +4,14 @@ import "firebase/firestore";
 import { functions } from "firebase";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBLlmLPoeY7KIFshQpw-D2cO_crCFTRbcQ",
-  authDomain: "substancequitting.firebaseapp.com",
-  databaseURL: "https://substancequitting.firebaseio.com",
-  projectId: "substancequitting",
-  storageBucket: "substancequitting.appspot.com",
-  messagingSenderId: "520500889169",
-  appId: "1:520500889169:web:ed1f8960369e6359ec9a70",
-  measurementId: "G-63EKN3D7K8"
+  apiKey: "",
+  authDomain: "",
+  databaseURL: "",
+  projectId: "",
+  storageBucket: "",
+  messagingSenderId: "",
+  appId: "",
+  measurementId: ""
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);

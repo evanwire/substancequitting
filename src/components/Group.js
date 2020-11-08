@@ -44,7 +44,7 @@ export default class Group extends React.Component {
     }
 
     uploadNewMessage(text, displayName){
-        const group = firestore.collection('rooms').doc(parseInt(this.props.groupId));
+        const group = firestore.collection('rooms').doc(this.props.groupId);
         const now = new Date()  
         const secondsSinceEpoch = Math.round(now.getTime() / 1000)
         const message = {
