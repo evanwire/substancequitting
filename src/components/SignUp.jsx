@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import 'bootswatch/dist/lux/bootstrap.min.css';
 import { Link } from "@reach/router";
-import { auth, firestore, generateUserDocument } from "../firebase";
+import { auth, firestore } from "../firebase";
 
 
 //Bootstrap components
@@ -26,7 +26,24 @@ const SignUp = () => {
     try{
       const {user} = await auth.createUserWithEmailAndPassword(email, password);
       const helper = firestore.collection("helper").doc("helper")
+
       const doc = await helper.get();
+      const chatuid = doc.data().userNotPaired
+      const numChats = doc.data().numChats
+
+      console.log(chatuid)
+      console.log(numChats)
+
+      let chatId = ""
+      if(chatuid){
+        firestore.collection("chats").doc(numChats.toString()).set({messages: []})
+        firestore.collection("helper").doc("helper").update({userNotPaired: "", numChats: (numChats + 1) })
+        firestore.collection("users").doc(chatuid.toString()).update({chatId: numChats.toString()})
+        chatId = numChats.toString()
+        
+      }else{
+        firestore.collection('helper').doc("helper").update({userNotPaired: user.uid})
+      }
 
       const randRoom = Math.floor(Math.random() * doc.data().numRooms)
       console.log(dateQuit)
@@ -36,13 +53,13 @@ const SignUp = () => {
 
 
       
-      await firestore.collection('users').doc(user.uid).set({
-                                                        chatId: "",
+      firestore.collection('users').doc(user.uid).set({
+                                                        chatId: chatId,
                                                         dateQuit: {seconds: secondsSinceEpoch, nanoseconds: 0},
                                                         displayName: displayName,
                                                         dpw: parseInt(dpw),
                                                         email: email,
-                                                        groupId: randRoom,
+                                                        groupId: randRoom.toString(),
                                                         reasonQuit: reasonQuit
                                                         });
       
@@ -88,7 +105,7 @@ const SignUp = () => {
   return (
     <div className="OuterWrapper">
       <Nav className="navbar-dark bg-primary MainNav sticky-top">
-          <h1 className="navbar-brand">Subtance Stopper</h1>
+          <h1 className="navbar-brand">Addictions Anonymous</h1>
       </Nav>
       <Row className="justify-content-center mt-5">
         <Col className="col-4">
@@ -156,7 +173,7 @@ const SignUp = () => {
             </Form.Group>
 
             <Button variant="primary" onClick = {(event) => {createUserWithEmailAndPasswordHandler(event, email, password)}}>
-              Sign Up
+              <Link to="/" className="text-white">Sign Up</Link> 
             </Button>
             <p className="text-center my-3">
               Already have an account?{" "}

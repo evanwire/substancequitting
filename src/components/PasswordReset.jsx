@@ -41,7 +41,7 @@ const PasswordReset = () => {
   return (
     <div className="OuterWrapper">
       <Nav className="navbar-dark bg-primary MainNav sticky-top">
-          <h1 className="navbar-brand">Subtance Stopper</h1>
+          <h1 className="navbar-brand">Addictions Anonymous</h1>
       </Nav>
       <Row className="justify-content-center mt-5">
         <Col className="col-4">

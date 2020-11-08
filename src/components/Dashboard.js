@@ -24,19 +24,14 @@ import Partner from './Partner'
 class Dashboard extends Component {
     constructor(props){
       super(props);
-      let user= {
-        chatId: null,
-        dateQuit: {seconds: null, nanoseconds: null},
-        uid: null,  
-        dpw: null,
-        daysTilQuit: null, 
-        email: null,
-        groupId: null,
-        reasonQuit: null,
-    }
+      
+      let user;
       if(props.user){
         user = props.user
-      }  
+      }else{
+          user = firestore.collection('users').doc(auth.currentUser.uid).get().data;
+      }
+      console.log(auth.currentUser.uid)
       this.state = {
         user: user,
         key: "progress",
@@ -49,31 +44,27 @@ class Dashboard extends Component {
             key: key
         })
     }
-  
-    componentDidMount = async () => {
-        
-        auth.onAuthStateChanged(async userAuth => {
-          const user = await generateUserDocument(userAuth);
-          this.setState({ user });
-        });
-        
     
-    };
+
     
     signOut(){
         auth.signOut().then(function() {
           }).catch(function(error) {
             // An error happened.
           });
+          window.location.reload()
     }
 
     findDaysClean(){
-        var now = new Date();
-        var d = new Date(0); 
-        d.setUTCSeconds(this.state.user.dateQuit.seconds); 
-        var Difference_In_Time = Math.round(now.getTime() - d.getTime()); 
-        var daysClean = Math.round(Difference_In_Time / (1000 * 3600 * 24));
-        return daysClean;
+        if(this.state.user.dateQuit.seconds){
+            var now = new Date();
+            var d = new Date(0); 
+            d.setUTCSeconds(this.state.user.dateQuit.seconds); 
+            var Difference_In_Time = Math.round(now.getTime() - d.getTime()); 
+            var daysClean = Math.round(Difference_In_Time / (1000 * 3600 * 24));
+            return daysClean;
+        }
+        
     }
 
     componentdid
@@ -90,11 +81,18 @@ class Dashboard extends Component {
         }
         let content;
         if (key === "progress"){
+           
             content = <Progress reasonQuit={this.state.user.reasonQuit} dpw={this.state.user.dpw} daysClean={daysClean} daysTilQuit={this.state.user.daysTilQuit}></Progress>
+            
+            
         } else if (key === "group"){
             content = <Group groupId={this.state.user.groupId} displayName={this.state.user.displayName}></Group>
         }else{
-            content = <Partner displayName={this.state.user.displayName} chatId={this.state.user.chatId}></Partner> //for now
+            if(this.state.user.chatId){
+                content = <Partner displayName={this.state.user.displayName} chatId={this.state.user.chatId}></Partner> //for now
+            }else{
+                content = <h2 className="text-center mt-5 mr-5 ml-5">We are currently working to find you an accountability partner. Check back regularly.</h2>
+            }
         }
 
         
@@ -104,7 +102,7 @@ class Dashboard extends Component {
                 
                     
                 <Nav className="navbar-dark bg-primary MainNav sticky-top" style={{ width: "100%" }}>
-                    <h1 className="navbar-brand">Subtance Stopper</h1> 
+                    <h1 className="navbar-brand">Addictions Anonymous</h1> 
                     <Button className="btn-secondary ml-auto mt-1 mb-1" onClick={this.signOut}>Sign Out</Button>
                     
                 </Nav>
@@ -121,7 +119,7 @@ class Dashboard extends Component {
                         <Nav.Link eventKey="group">Speak to group</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link eventKey="partner">Accountability Partner</Nav.Link>
+                        <Nav.Link eventKey="partner disabled">Accountability Partner</Nav.Link>
                     </Nav.Item>
                 </Nav>
                 

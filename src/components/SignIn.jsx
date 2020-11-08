@@ -43,7 +43,7 @@ const SignIn = () => {
   return (
     <div className="OuterWrapper">
       <Nav className="navbar-dark bg-primary MainNav sticky-top">
-          <h1 className="navbar-brand">Subtance Stopper</h1>
+          <h1 className="navbar-brand">Addictions Anonymous</h1>
       </Nav>
       <Row className="justify-content-center mt-5">
         <Col className="col-4">
@@ -77,9 +77,7 @@ const SignIn = () => {
                 Sign up here
               </Link>{" "}
               <br />{" "}
-              <Link to="passwordReset" className="text-blue-500 hover:text-blue-600">
-                Forgot Password?
-              </Link>
+              
             </p>
           </Form>
         </Col>
@@ -90,3 +88,8 @@ const SignIn = () => {
 };
 
 export default SignIn;
+/*
+<Link to="passwordReset" className="text-blue-500 hover:text-blue-600">
+                Forgot Password?
+              </Link>
+              */

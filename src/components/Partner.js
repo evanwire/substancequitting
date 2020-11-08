@@ -33,6 +33,7 @@ export default class Group extends React.Component {
     }
 
     async componentDidMount(){
+        
         const group = firestore.collection('chats').doc(this.props.chatId);
         const observer = group.onSnapshot(docSnapshot => {
             console.log(`Received doc snapshot: ${docSnapshot.data().pin}`);

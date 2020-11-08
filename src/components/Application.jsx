@@ -11,13 +11,12 @@ import generateAutoId from "firebase-auto-ids"
 
 function Application() {
   const user = useContext(UserContext);
-  let newId = generateAutoId(new Date().getTime())
   return (
         user ?
-        <Dashboard user={user} newId={newId}/>
+        <Dashboard user={user}  />
       :
         <Router>
-          <SignUp path="signUp" newId={newId}/>
+          <SignUp path="signUp" />
           <SignIn path="/" />
           <PasswordReset path = "passwordReset" />
         </Router>
