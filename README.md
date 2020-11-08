@@ -3,7 +3,7 @@
 ## Inspiration
 When I saw the different tracks, I knew I wanted to either build something related to health or public good, since I have no experience building projects in either of those areas. My first thought was that everyone was probably going to perform analysis of COVID-19 data, so I wanted to stray away from COVID for this project. I began thinking of other epidemics that currently face the world, and I realized that vaping has become a real issue. Vaping has become "trendy," and thus it is a hard challenge to tackle.
 
-My thoughts then shifted to a broader view. Due to COVID, there likely is not many, if any, in person AA and NA meetings occuring. Thus I decided to build Addictions Annonymous to help fill that void
+My thoughts then shifted to a broader view. Due to COVID, there likely is not many, if any, in person AA and NA meetings occurring. Thus I decided to build Addictions Anonymous to help fill that void
 
 ## What it does
 I leveraged a completely anonymous registration process (users do not provide their names) to ensure total anonymity. I then wanted to replicate the feel of an AA meeting, so I built group-chat functionality. I also wanted people to be able to track their progress, so there is a progress tab where people can track how much money they have saved and review why they originally realized they wanted to quit their addiction. There is also an accountability partner feature where each user is assigned a random, anonymous accountability partner that could act as a sponsor. 
