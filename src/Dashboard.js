@@ -13,6 +13,7 @@ import Col from 'react-bootstrap/Col';
 //Custom components
 import Progress from './components/Progress';
 import Group from './components/Group'
+import Partner from './components/Partner'
 
 
 class App extends Component {
@@ -48,7 +49,7 @@ class App extends Component {
         } else if (key === "group"){
             content = <Group></Group>
         }else{
-            content = <h1>Partner</h1>
+            content = <Partner></Partner> //for now
         }
 
 

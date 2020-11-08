@@ -16,7 +16,7 @@ import Card from 'react-bootstrap/Card'
 
 
 
-export default class Group extends React.Component {
+export default class Partner extends React.Component {
     constructor(props) {
         super(props);
         
