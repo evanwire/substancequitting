@@ -1,5 +1,8 @@
 # Addictions Anonymous
 
+## Check out the project demo on dev post
+https://devpost.com/software/addictions-anonymous
+
 ## Inspiration
 When I saw the different tracks, I knew I wanted to either build something related to health or public good, since I have no experience building projects in either of those areas. My first thought was that everyone was probably going to perform analysis of COVID-19 data, so I wanted to stray away from COVID for this project. I began thinking of other epidemics that currently face the world, and I realized that vaping has become a real issue. Vaping has become "trendy," and thus it is a hard challenge to tackle.
 
